@@ -14,6 +14,10 @@ Content-Type: application/json
 {
   "firstName": "Jo",
   "lastName": "Do",
-  "email": "johndoe@example.com",
+  "email": "johndo@example.com",
   "password": "mypassword"
 }
+
+### Logout
+POST http://localhost:8000/users/logout
+Content-Type: application/json

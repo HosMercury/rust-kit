@@ -1,4 +1,4 @@
-use crate::handlers::users_handler::{LoginData, RegisterData};
+use crate::handlers::auth_handler::{LoginData, RegisterData};
 use chrono::{DateTime, Local};
 use password_auth::{generate_hash, verify_password};
 use serde::{Deserialize, Serialize};
@@ -12,6 +12,7 @@ pub struct User {
     pub first_name: String,
     pub last_name: String,
     pub email: String,
+    #[serde(skip_serializing)]
     pub password: String,
     pub created_at: DateTime<Local>,
 }

@@ -1,5 +1,9 @@
 @baseUrl = http://localhost:8000
 
-### Login
+### Me
 GET {{baseUrl}}/users/me
+Content-Type: application/json
+
+### Logout
+POST {{baseUrl}}/users/logout
 Content-Type: application/json

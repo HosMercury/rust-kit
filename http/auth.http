@@ -19,7 +19,3 @@ Content-Type: application/json
   "email": "johndoe1@example.com",
   "password": "mypassword"
 }
-
-### Logout
-POST {{baseUrl}}/users/logout
-Content-Type: application/json

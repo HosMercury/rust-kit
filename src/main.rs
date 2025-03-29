@@ -41,7 +41,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let session_layer = SessionManagerLayer::new(session_store)
         .with_secure(false)
-        .with_expiry(Expiry::OnInactivity(Duration::seconds(60 * 60 * 24)));
+        .with_expiry(Expiry::OnInactivity(Duration::seconds(60 * 60 * 24))); // day
 
     let app_state = AppState { pool };
 

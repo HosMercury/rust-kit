@@ -105,13 +105,10 @@ pub async fn post_register(
             (StatusCode::CREATED, Json(user)).into_response()
         }
 
-        Err(e) => {
-            println!("{}", e);
-            (
-                StatusCode::INTERNAL_SERVER_ERROR,
-                Json(general_error("User registration failed")),
-            )
-                .into_response()
-        }
+        Err(_) => (
+            StatusCode::INTERNAL_SERVER_ERROR,
+            Json(general_error("User registration failed")),
+        )
+            .into_response(),
     }
 }

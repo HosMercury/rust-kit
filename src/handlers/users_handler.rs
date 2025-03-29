@@ -9,7 +9,7 @@ use tower_sessions::Session;
 
 pub fn users_router() -> Router<AppState> {
     Router::new().nest(
-        "/auth",
+        "/users",
         Router::new()
             .route("/me", get(me))
             .route("/logout", post(logout)),

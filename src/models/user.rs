@@ -12,8 +12,8 @@ pub struct User {
     pub first_name: String,
     pub last_name: String,
     pub email: String,
-    #[serde(skip_serializing)]
-    pub password: String,
+    #[serde(skip_serializing, default)] // 👈 Add `default` to avoid deserialization issues
+    pub password: Option<String>,
     pub created_at: DateTime<Local>,
 }
 
@@ -25,7 +25,11 @@ impl User {
             .await
             .unwrap();
 
-        let user_password = user.password.clone();
+        let user_password = user
+            .password
+            .clone()
+            .ok_or_else(|| anyhow::anyhow!("Password not found"))?;
+
         task::spawn_blocking(move || verify_password(&data.password, &user_password)).await??;
 
         Ok(user)

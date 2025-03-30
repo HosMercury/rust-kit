@@ -1,24 +1,30 @@
 use convert_case::{Case, Casing};
-use serde_json::{Map, Value, json};
+use serde::{Deserialize, Serialize};
+use serde_json::{Value, json};
+use std::borrow::Cow;
 use validator::ValidationErrors;
 
-pub fn validation_errors(errors: ValidationErrors) -> Value {
-    let mut error_map = Map::new();
-    for (field, errors) in errors.field_errors().iter() {
-        let camel_case_field = field.to_case(Case::Camel); // Convert to camelCase
+#[derive(Deserialize, Serialize)]
+pub struct MyError {
+    pub field: String,
+    pub message: String,
+}
 
-        let messages: Vec<String> = errors
-            .iter()
-            .map(|err| err.message.clone().unwrap_or_default().to_string()) // Fix: Convert Cow<'_, str> to String
-            .collect();
-        
-        error_map.insert(camel_case_field, json!(messages));
+pub fn validation_errors(errors: ValidationErrors) -> Vec<MyError> {
+    let field_errors = errors.field_errors();
+    let mut return_errs: Vec<MyError> = vec![];
+
+    for (field, errs) in field_errors {
+        let field = field.to_case(Case::Camel);
+        for err in errs {
+            return_errs.push(MyError {
+                field: field.clone(),
+                message: err.message.clone().unwrap_or(Cow::Borrowed("")).into(),
+            });
+        }
     }
 
-    json!({
-        "message": "The given data was invalid.",
-        "errors": error_map
-    })
+    return_errs
 }
 
 pub fn general_error(message: &str) -> Value {

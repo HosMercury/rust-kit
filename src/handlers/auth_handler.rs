@@ -70,6 +70,9 @@ pub struct RegisterData {
 
     #[validate(length(min = 8, message = "Password must be at least 8 characters long"))]
     pub password: String,
+
+    #[validate(must_match(other = "password", message = "Passwords do not match"))]
+    pub confirm_password: String,
 }
 
 pub async fn post_register(

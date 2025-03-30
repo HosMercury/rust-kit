@@ -28,5 +28,5 @@ pub fn validation_errors(errors: ValidationErrors) -> Vec<MyError> {
 }
 
 pub fn general_error(message: &str) -> Value {
-    json!({ "message": message })
+    json!([{ "message": message }])
 }

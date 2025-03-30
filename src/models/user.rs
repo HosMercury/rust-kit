@@ -22,8 +22,7 @@ impl User {
         let user: User = query_as(" SELECT * FROM users WHERE email = $1 ")
             .bind(&data.email)
             .fetch_one(pool)
-            .await
-            .unwrap();
+            .await?;
 
         let user_password = user
             .password
